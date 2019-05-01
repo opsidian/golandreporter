@@ -5,6 +5,7 @@ import (
 	"os"
 	"strings"
 
+	colorable "github.com/onsi/ginkgo/reporters/stenographer/support/go-colorable"
 	"github.com/onsi/ginkgo/config"
 	"github.com/onsi/ginkgo/reporters"
 	"github.com/onsi/ginkgo/reporters/stenographer"
@@ -21,7 +22,7 @@ func NewAutoGolandReporter() reporters.Reporter {
 	if strings.Contains(os.Getenv("OLDPWD"), "Goland") {
 		return NewGolandReporter()
 	} else {
-		stenographer := stenographer.New(!config.DefaultReporterConfig.NoColor, config.GinkgoConfig.FlakeAttempts > 1)
+		stenographer := stenographer.New(!config.DefaultReporterConfig.NoColor, config.GinkgoConfig.FlakeAttempts > 1, colorable.NewColorableStdout())
 		return reporters.NewDefaultReporter(config.DefaultReporterConfig, stenographer)
 	}
 }
